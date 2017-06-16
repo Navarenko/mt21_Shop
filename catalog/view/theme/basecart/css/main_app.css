@@ -1,0 +1,33 @@
+/* оформление заказа в мобильной версии */
+div#accordion {
+    margin-left: -30px;
+    margin-right: -52px;
+}
+div#collapse-payment-address,
+div#collapse-payment-method {
+    font-size: 13pt;
+}
+#collapse-payment-address .form-horizontal .checkbox, .form-horizontal .radio {
+    margin-bottom: 10px;
+}
+#collapse-payment-method .panel-body .radio {
+    margin-bottom: 20px;
+}
+div#collapse-payment-address .form-horizontal .pull-right,
+div#collapse-payment-method .pull-right,
+div#collapse-checkout-confirm .pull-right {
+    width: 100%;
+    margin-left: -15px;
+    position: absolute;
+}
+div#collapse-payment-address .form-horizontal .pull-right input,
+div#collapse-payment-method .pull-right input,
+div#collapse-checkout-confirm .pull-right input {
+    width: 100%;
+    font-size: 14pt;
+    border-radius: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    background-color: #8bc34a;
+}

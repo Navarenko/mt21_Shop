@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>Remember Me</name>
+  <code>remember_me</code>
+  <version>4.0</version>
+  <author>gdemon</author>
+  <link>mailto:d-emon@inbox.ru</link>
+
+    <file path="catalog/view/theme/*/template/account/login.tpl">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+            <input type="password" name="password"
+            ]]></search>
+            <add position="after"><![CDATA[      
+                <!-- <input type="checkbox" name="autologin" value="1" checked="checked" />
+            <?php echo $text_remember_me; ?> -->
+            ]]></add>
+        </operation>        
+    </file>
+     <file path="catalog/controller/account/login.php">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+            function validate() {
+            ]]></search>
+            <add position="after"><![CDATA[      
+                $autologin = true;
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+            if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+            ]]></search>
+            <add position="replace"><![CDATA[      
+                if (!$this->customer->login($this->request->post['email'], $this->request->post['password'],false,$autologin)) {
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                $this->load->language('account/login');
+            ]]></search>
+            <add position="after"><![CDATA[      
+                $data['text_remember_me'] = $this->language->get('text_remember_me');
+            ]]></add>
+        </operation>
+    </file>
+
+
+     <file path="catalog/language/russian/account/login.php">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                $_['text_forgotten']
+            ]]></search>
+            <add position="after"><![CDATA[      
+                $_['text_remember_me']                 = 'Запомнить меня';
+            ]]></add>
+        </operation>
+    </file>  
+    <file path="catalog/language/english/account/login.php">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                $_['text_forgotten']
+            ]]></search>
+            <add position="after"><![CDATA[      
+                $_['text_remember_me']                 = 'Remember me';
+            ]]></add>
+        </operation>
+    </file>
+  
+    
+              
+    <file path="system/library/customer.php">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                function login($email, $password, $override = false) {
+            ]]></search>
+            <add position="replace"><![CDATA[      
+                function login($email, $password, $override = false, $autologin=false) {
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                password = '"
+            ]]></search>
+            <add position="replace"><![CDATA[      
+                password = '".$password."' OR password = '"
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                return true;
+            ]]></search>
+            <add position="before"><![CDATA[      
+              if($autologin) {
+                  $salt = $this->db->query("SELECT salt FROM " . DB_PREFIX . "customer WHERE customer_id = '".$customer_query->row['customer_id']."'")->row['salt'];
+                  $password_c = sha1($salt . sha1($salt . sha1($password)));
+                  setcookie('em', $email, time()+60 * 60 * 24 * 30); 
+                  setcookie('p', $password_c, time()+60 * 60 * 24 * 30); 
+              }
+            ]]></add>
+        </operation>
+    </file>
+    
+    <file path="system/library/customer.php">
+        <operation error="skip">
+            <search trim="true"><![CDATA[
+                $registry->get('session');
+            ]]></search>
+            <add position="after"><![CDATA[
+            if(isset($this->request->get['route']) && $this->request->get['route'] == 'account/logout'){
+                setcookie('em', ''); 
+                setcookie('p', ''); 
+                unset($_COOKIE['em']);
+                unset($_COOKIE['p']);
+            } elseif (!$this->isLogged() && !empty($_COOKIE['em']) && !empty($_COOKIE['p'])) {  
+                $this->login($_COOKIE['em'], $_COOKIE['p']);
+            }
+            ]]></add>
+        </operation>
+    </file> 
+
+</modification>

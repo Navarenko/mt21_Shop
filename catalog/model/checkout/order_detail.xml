@@ -1,0 +1,21 @@
+<order>
+	<item>
+		<id>
+			123456
+		</id>
+		<count>
+			2
+		</count>
+	</item>
+	<item>
+		<id>
+			654321-555444
+		</id>
+		<count>
+			3
+		</count>
+	</item>
+	<name>
+		Иванов Ivan Иванович
+	</name>
+</order>

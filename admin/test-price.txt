@@ -1,0 +1,15 @@
+ 
+					<html> 
+					    <head> 
+					        <title>Обновление курса в интернет-магазине</title> 
+					    </head> 
+					    <body> 
+						<table border="0"><tr><td><img src="http://mt21.ru/export-price/robot.jpg"></td><td valign="top">
+					        <h2>Отчет робота</h2>Cгенерирован автоматически <b>12-01-2016 11:09:52</b><br><br>
+							— Курс составляет 1 RUB = <b>0.012075982079243</b> EUR
+							<br><br>
+							<i>Курс 0.012075982079243 записан в базу</i>
+							</td></tr>
+							</table>
+					    </body> 
+					</html>
